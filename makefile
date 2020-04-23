@@ -13,8 +13,7 @@ lex.yy.c: ./src/parser.l
 y.tab.o: y.tab.c
 	gcc -c y.tab.c
 
-y.tab.h:
-y.tab.c:
+y.tab.h y.tab.c:
 	yacc -d ./src/parser.y
 
 # ---[ the action part ]-------------------------------------------------------
