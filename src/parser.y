@@ -3,6 +3,8 @@
 #include <stdio.h>
 #include <string.h>
 
+#include "./src/sds.h"
+
 extern int yylineno;
 extern char* yytext;
 
@@ -13,18 +15,29 @@ int main();
 
 %}
 
-%token STRING NUMBER PRINT TOKEN
+%union {
+    sds string;
+    int number;
+}
+
+%token PRINT TOKEN NEWLINE
+%token <string> STRING
+%token <number> NUMBER
 
 %%
 
 statements :
-           |    statements statement
+           |    statements statement NEWLINE
            ;
 
 statement:      STRING
          |      NUMBER
-         |      PRINT STRING
-         |      PRINT NUMBER
+         |      PRINT STRING {
+                    printf("  | %s\n>>> ", $2);
+                }
+         |      PRINT NUMBER {
+                    printf("  | %d\n>>> ", $2);
+                }
          ;
 
 %%
@@ -35,6 +48,7 @@ void yyerror(const char* string) {
 }
 
 int main() {
+    printf(">>> ");
     yyparse();
     return 0;
 }
