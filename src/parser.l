@@ -1,10 +1,13 @@
 %{
 
 #include <stdio.h>
+#include <stdlib.h>
+
+#include "./src/sds.h"
 #include "y.tab.h"
 
 int yywrap(void);
-int yyerror(const char* string);
+void yyerror(const char* string);
 
 %}
 
@@ -39,3 +42,4 @@ int yyerror(const char* string);
 int yywrap(void) {
     return 1;
 }
+
